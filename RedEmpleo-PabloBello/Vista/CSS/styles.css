@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+* {
+    font-family: 'Varela Round', sans-serif;
+}
+
+::selection {
+    background-color: #ad5492;
+    color: #d7d0c0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #391c3a;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    background-color: #d7d0c0;
+    text-align: center;
+    padding: 20px;
+    gap: 1rem;
+    border-radius: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    overflow-y: auto;
+    max-height: 80vh;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.tituloVentana {
+    margin-top: 0;
+}
+
+.boton {
+    background-color: rgb(17 17 17);
+    color: white;
+    display: inline-flex;
+    justify-content: center;
+    gap: .75rem;
+    border-radius: 1.5rem;
+    border: 0;
+    padding: 1rem;
+    text-align: center;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    transition-duration: .15s;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.boton:hover {
+    background-color: rgb(85 85 85);
+    color: #ad5492;
+    cursor: pointer;
+}
+
+.botonVolver img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+    transition: 0.25s;
+    border: none;
+}
+.botonVolver img {
+    cursor: pointer;
+}
+
+#loading {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+#loading img {
+    border-radius: 5rem;
+    max-width: 75%;
+    max-height: 75%;
+    object-fit: contain;
+}
+
+#toast-container .toast-error {
+    background-color: #9e24a0;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    align-items: center;
+}
+
+.radio {
+    margin: 0.5rem;
+}
+.radio input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+.radio input[type="radio"] + .radio-label:before {
+    content: '';
+    background: #f4f4f4;
+    border-radius: 100%;
+    border: 1px solid #b4b4b4;
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    position: relative;
+    top: -0.2em;
+    margin-right: 0.5rem;
+    vertical-align: top;
+    cursor: pointer;
+    text-align: center;
+    transition: all 250ms ease;
+}
+.radio input[type="radio"]:checked + .radio-label:before {
+    background-color: #ad5492;
+    box-shadow: inset 0 0 0 4px #f4f4f4;
+}
+.radio input[type="radio"]:focus + .radio-label:before {
+    outline: none;
+    border-color: #ad5492;
+}
+.radio input[type="radio"]:disabled + .radio-label:before {
+    box-shadow: inset 0 0 0 4px #f4f4f4;
+    border-color: #b4b4b4;
+    background: #b4b4b4;
+}
+.radio input[type="radio"] + .radio-label:empty:before {
+    margin-right: 0;
+}
+
+.radioContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputTexto {
+    height: 1.5rem;
+    width: 12.5rem;
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin: 0.25rem 0 1.25rem 0;
+    transition: .25s;
+}
+
+textarea {
+    resize: none;
+    height: 6.25rem;
+    width: 12.5rem;
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    margin-bottom: 1rem;
+    transition: .25s;
+}
+
+#toggleButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0 0.25rem;
+}
+
+.contrasenaDiv {
+    position: relative;
+}
+
+.notasForm {
+    margin-bottom: 1rem;
+}

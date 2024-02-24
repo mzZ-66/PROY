@@ -1,0 +1,64 @@
+- tabla Registro de alumnos (no se toca nada, solo se cogen algunos datos que se necesiten)
+	~ PK DNI
+	~ Nombre
+	~ Apellidos
+	~ Email
+	~ Titulado (boolean)
+
+- tabla Alumnos, la cual los alumnos se registran con su DNI, que utilizará los datos cogidos de su registro del centro, con la posibilidad de editarlos
+	~ PK DNI
+	~ Clave de acceso
+	~ Nombre
+	~ Apellidos
+	~ Email
+	~ Disponibilidad (Esta disponible? boolean)
+	~ Último acceso
+	~ FK estudiosCentro -> estudios.ID
+	~ EstudiosExternos
+
+- tabla Estudios, contiene los estudios que se cursan en el centro. Las empresas  pueden filtrar para buscar para un cierto estudio (DAW, DAM, etc.)
+	~ PK ID
+	~ Nombre
+	~ Descripcion
+
+- tabla Empresas. Gestionan solicitudes de empleo. Pueden buscar en base a estudios a un perfil que les encaje. También gestionan sus peticiones fct para buscar y aceptar alumnos
+	~ PK CIF
+	~ Clave de acceso
+	~ Nombre
+	~ Email
+	~ Última petición
+
+- tabla Solicitud de empleo. Contiene la información sobre la solicitud de empleo creada por la empresa. (Experiencia, posibilidad de viajar, residencia preferente). Además de su estado, activo o inactivo
+	~ PK ID
+	~ FK empresaSolicitante -> empresa.CIF
+	~ FK perfilProfesional -> estudios.id
+	~ Experiencia (diferentes tramos)
+	~ Posibilidad de viajar (si / no, boolean)
+	~ Residencia de preferencia
+	~ Descripcion
+	~ Estado (activo / inactivo, boolean)
+
+- tabla contrato: define el estado de la relacion laboral entre un alumno y una empresa
+	~ PK id
+	~ FK empleado -> alumno.dni
+	~ FK empresa -> empresa.cif
+	~ tipoContrato
+	~ fechaContrato
+
+- tabla Petición FCT, en la cual se almacenan datos sobre los alumnos disponibles de los diferentes estudios, y las modalidades de fct
+	~ PK id
+	~ FK empresaSolicitante -> empresa.cif
+	~ nAlumnos
+	~ FK perfilAlumno -> estudios.id
+	~ modalidadFct
+
+- tabla Histórico, donde se almacenan los antiguos alumnos y empresas en la bolsa de empleo, que han quedado inactivos
+
+- tabla Tutores, que pueden consultar las peticiones fct
+	~ esAdministrador (boolean): gestiona a las empresas y empleados. Pueden enviar datos de alumnos y empresas al histórico. Pueden realizar consultas y obtener listados.
+
+- tabla relacion fct: define el estado de la relacion entre un alumno y una empresa en cuanto a las prácticas FCT
+
+
+falta:
+- crear una tabla de credenciales para alumno, empresa y tutores, la cual contenga las contraseñas enlazadas a cada usuario
