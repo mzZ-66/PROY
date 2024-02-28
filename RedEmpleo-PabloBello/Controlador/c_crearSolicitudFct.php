@@ -1,5 +1,6 @@
 <?php
     include "../DAO/operacionesSolicitudFct.php";
+    include "../DAO/operacionesEmpresa.php";
     include "../Modelo/SolicitudFct.php";
 
     if (session_status() == PHP_SESSION_NONE) {
@@ -21,6 +22,11 @@
         $nuevaSolicitudFct = new SolicitudFct(null, $_SESSION['empresa']['cif'], $nAlumnosPorEstudiosSerializado, $modalidadFct, $nAlumnosPorEstudiosSerializado); // establezco el restante igual que el original, ya que al principio son lo mismo
         $operacionesSolicitudFct= new operacionesSolicitudFct();
         $operacionesSolicitudFct->registrarSolicitudFct($nuevaSolicitudFct);
+
+        // actualizo la ultima peticion de la empresa
+        $operacionesEmpresa = new operacionesEmpresa();
+        $operacionesEmpresa->actualizarUltimaPeticion($_SESSION["empresa"]['cif']);
+
         $mensaje = "Solicitud FCT registrada correctamente.";
         echo json_encode(['mensaje' => $mensaje]);
     } catch (Exception $e) {

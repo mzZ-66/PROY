@@ -196,5 +196,17 @@
             $consulta->close();
             return $alumnos;
         }
+
+        // compruebo si ha pasado 1 año desde el ultimo accesso
+        public function obtenerAlumnosInactivos() {
+            $consulta = $this->conexion->prepare("SELECT * FROM alumno WHERE ultimoAcceso < DATE_SUB(NOW(), INTERVAL 1 YEAR);");
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $alumnosInactivos = [];
+            while ($alumno = $resultado->fetch_assoc()) {
+                $alumnosInactivos[] = $alumno;
+            }
+            return $alumnosInactivos;
+        }
     }
 ?>

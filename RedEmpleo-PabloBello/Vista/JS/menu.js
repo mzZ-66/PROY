@@ -786,6 +786,7 @@ function filtrarPorPerfil() {
                         `).join('')}
                     </table>
                 `;
+                generarPDF(containerVariable);
             });
         });
     });
@@ -843,6 +844,7 @@ function filtrarPorPerfil() {
                         `).join('')}
                     </table>
                 `;
+                generarPDF(containerVariable);
             });
         });
     });
@@ -1024,5 +1026,33 @@ function cerrarSesion() {
     .catch(error => {
         document.getElementById('loading').style.display = 'none';
         console.log('Error en la solicitud:', error.message);
+    });
+}
+
+// algunas veces sale cortado el pdf
+function generarPDF(elementHTML) {
+    const jsPDF = window.jspdf.default;
+    var doc = new jsPDF();
+
+    doc.html(elementHTML, {
+        callback: function(doc) {
+            // Obtener los datos del PDF en formato de bytes
+            var pdfBytes = doc.output('arraybuffer');
+
+            // Crear un blob con los datos del PDF
+            var blob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            // Crear una URL Blob
+            var url = URL.createObjectURL(blob);
+
+            // Abrir el PDF en una nueva pestaña
+            window.open(url);
+        },
+        margin: [10, 10, 10, 10],
+        autoPaging: 'text',
+        x: 0,
+        y: 0,
+        width: 190, // Ancho objetivo en el documento PDF
+        windowWidth: 675 // Ancho de ventana en píxeles CSS
     });
 }

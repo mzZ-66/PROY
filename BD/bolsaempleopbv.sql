@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2024 at 02:18 PM
+-- Generation Time: Feb 28, 2024 at 06:00 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -67,7 +67,22 @@ CREATE TABLE `alumno` (
 INSERT INTO `alumno` (`dni`, `clave`, `nombre`, `apellidos`, `email`, `disponibilidad`, `ultimoAcceso`, `estudiosCentro`, `estudiosExternos`) VALUES
 ('05319965L', '$2y$10$L.uPzYPSIoIw9K1Vc/efWeKFGYRp7DRzQye/HskOMXDUJsGPk4MIW', 'Ted', 'Kaczynsksi', 'tedkaczynski@example.com', 0, '2024-02-22', 20, 'Nada'),
 ('11949813W', '$2y$10$zrmLLkUwjyesetgb/U4BZOH1nMR3mwxEJEFv0q3HaON/GuPqM8R3u', 'John', 'Doe', 'john.doe@example.com', 1, '2024-02-22', 20, ''),
-('52439891Y', '$2y$10$Wf4tYBHKeik/WA4m8I0p9eV.jG8W5aRavnXKiJfRiqRlT1bb1XAFi', 'Charlie', 'Brown', 'charlie.brown@example.com', 1, '2024-02-21', 21, 'ASIR en Cuenca');
+('49215264W', '$2y$10$EmPWb1K/lrrZJqwXNtY0MOS/hiMrsYsYTjBd9D5aGcHACezkZ7uvO', 'Pablo', 'Bello', 'pablobello0997@gmail.com', 0, '2024-02-28', 20, 'No'),
+('52439891Y', '$2y$10$Wf4tYBHKeik/WA4m8I0p9eV.jG8W5aRavnXKiJfRiqRlT1bb1XAFi', 'Charlie', 'Brown', 'charlie.brown@example.com', 1, '2024-02-21', 21, 'ASIR en Cuenca'),
+('56990880P', '$2y$10$X5qzUTewkjNmvVbryNERueoIBKx/jXJMfnVSWQd/q41n2SPX6DC52', 'Tom', 'Hatton', 'tomhatton@example.com', 1, '2024-02-22', 21, 'asdasd'),
+('95448959V', '$2y$10$XSSEdbaSWYlu3HQK26RkceGil.JPUdWT9cY.6sNKjbyMi.ZAPitLa', 'Alice', 'Smith', 'alice.smith@example.com', 1, '2024-02-22', 21, 'No');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alumno_estudios`
+--
+
+CREATE TABLE `alumno_estudios` (
+  `id` int(5) NOT NULL,
+  `alumno` varchar(9) NOT NULL,
+  `estudios` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -88,7 +103,8 @@ CREATE TABLE `contrato` (
 --
 
 INSERT INTO `contrato` (`id`, `empleado`, `empresa`, `tipoContrato`, `fechaContrato`) VALUES
-(12, '05319965L', 12345, 'indefinido', '2024-02-21');
+(12, '05319965L', 12345, 'indefinido', '2024-02-21'),
+(14, '49215264W', 12345, 'indefinido', '2024-02-28');
 
 -- --------------------------------------------------------
 
@@ -110,7 +126,7 @@ CREATE TABLE `empresa` (
 --
 
 INSERT INTO `empresa` (`cif`, `clave`, `nombre`, `email`, `ultimaPeticion`, `empleadora`) VALUES
-(12345, '$2y$10$ksCFn2q4KuqstvIGuVF0n.ZZ0gV5iO3tC8mPyzNJJ0Fuyk.FTjtUO', 'Test', 'test@example.com', '2024-02-21', 1),
+(12345, '$2y$10$ksCFn2q4KuqstvIGuVF0n.ZZ0gV5iO3tC8mPyzNJJ0Fuyk.FTjtUO', 'Test', 'pablobello0997@gmail.com', '2024-02-28', 1),
 (54321, '$2y$10$3ZeJ3TzxXgmMFsQiaof4zuqQYX/3t1EQP74SEQz5NA.Yst5JV2Ay6', 'Test2', 'test2@example.com', '2024-02-21', 0);
 
 -- --------------------------------------------------------
@@ -177,7 +193,9 @@ INSERT INTO `registroalumnos` (`dni`, `nombre`, `apellidos`, `email`, `titulado`
 ('11949813W', 'John', 'Doe', 'john.doe@example.com', 1),
 ('14399207B', 'Jane', 'Doe', 'jane.doe@example.com', 0),
 ('28380897R', 'Bob', 'Johnson', 'bob.johnson@example.com', 0),
+('49215264W', 'Pablo', 'Bello', 'pablobello0997@gmail.com', 1),
 ('52439891Y', 'Charlie', 'Brown', 'charlie.brown@example.com', 1),
+('56990880P', 'Tom', 'Hatton', 'tomhatton@example.com', 1),
 ('95448959V', 'Alice', 'Smith', 'alice.smith@example.com', 1);
 
 -- --------------------------------------------------------
@@ -202,7 +220,8 @@ CREATE TABLE `solicitudempleo` (
 --
 
 INSERT INTO `solicitudempleo` (`id`, `empresaSolicitante`, `perfilProfesional`, `experiencia`, `posibilidadViajar`, `residenciaFavorita`, `descripcion`, `activa`) VALUES
-(12, 12345, 20, 'Menos de 1 año', 1, 'Albacete', 'Front dev', 0);
+(12, 12345, 20, 'Menos de 1 año', 1, 'Albacete', 'Front dev', 0),
+(13, 12345, 20, 'Sin experiencia', 1, 'Albacete', 'test', 0);
 
 -- --------------------------------------------------------
 
@@ -224,7 +243,8 @@ CREATE TABLE `solicitudfct` (
 
 INSERT INTO `solicitudfct` (`id`, `empresaSolicitante`, `nAlumnosPorEstudios`, `modalidadFct`, `nAlumnosPorEstudiosRestante`) VALUES
 (11, 12345, 'a:3:{i:20;i:4;i:21;i:2;i:22;i:6;}', 'normal', 'a:3:{i:20;i:4;i:21;i:1;i:22;i:6;}'),
-(12, 54321, 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}', 'dualTec', 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}');
+(12, 54321, 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}', 'dualTec', 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}'),
+(16, 12345, 'a:3:{i:20;i:1;i:21;i:1;i:22;i:1;}', 'normal', 'a:3:{i:20;i:1;i:21;i:1;i:22;i:1;}');
 
 -- --------------------------------------------------------
 
@@ -264,6 +284,14 @@ ALTER TABLE `admin`
 ALTER TABLE `alumno`
   ADD PRIMARY KEY (`dni`),
   ADD KEY `FK_estudiosCentro` (`estudiosCentro`);
+
+--
+-- Indexes for table `alumno_estudios`
+--
+ALTER TABLE `alumno_estudios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_alumno2` (`alumno`),
+  ADD KEY `FK_estudios` (`estudios`);
 
 --
 -- Indexes for table `contrato`
@@ -326,10 +354,16 @@ ALTER TABLE `tutor`
 --
 
 --
+-- AUTO_INCREMENT for table `alumno_estudios`
+--
+ALTER TABLE `alumno_estudios`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `contrato`
 --
 ALTER TABLE `contrato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `estudios`
@@ -347,13 +381,13 @@ ALTER TABLE `fct`
 -- AUTO_INCREMENT for table `solicitudempleo`
 --
 ALTER TABLE `solicitudempleo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `solicitudfct`
 --
 ALTER TABLE `solicitudfct`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
@@ -364,6 +398,13 @@ ALTER TABLE `solicitudfct`
 --
 ALTER TABLE `alumno`
   ADD CONSTRAINT `FK_estudiosCentro` FOREIGN KEY (`estudiosCentro`) REFERENCES `estudios` (`id`);
+
+--
+-- Constraints for table `alumno_estudios`
+--
+ALTER TABLE `alumno_estudios`
+  ADD CONSTRAINT `FK_alumno2` FOREIGN KEY (`alumno`) REFERENCES `alumno` (`dni`),
+  ADD CONSTRAINT `FK_estudios` FOREIGN KEY (`estudios`) REFERENCES `estudios` (`id`);
 
 --
 -- Constraints for table `contrato`

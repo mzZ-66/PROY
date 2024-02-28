@@ -555,6 +555,9 @@ function login(controlador) {
             return response.json();
         })
         .then(data => {
+            if (data.avisoInactividad) {
+                console.log(data.avisoInactividad);
+            }
             if (data.error) {
                 toastr.error(data.error);
                 return;

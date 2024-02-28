@@ -143,5 +143,16 @@
         
             return array_values($empresas); // Devuelve el array como un array indexado
         }
+
+        public function obtenerEmpresasInactivas() {
+            $consulta = $this->conexion->prepare("SELECT * FROM empresa WHERE ultimaPeticion < DATE_SUB(NOW(), INTERVAL 6 MONTH);");
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $empresasInactivas = [];
+            while ($empresa = $resultado->fetch_assoc()) {
+                $empresasInactivas[] = $empresa;
+            }
+            return $empresasInactivas;
+        }
     }
 ?>
