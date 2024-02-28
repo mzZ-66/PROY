@@ -128,7 +128,7 @@
                 if (isset($fila['nAlumnosPorEstudios'])) {
                     $nAlumnosPorEstudios = unserialize($fila['nAlumnosPorEstudios']);
                     if (isset($nAlumnosPorEstudios[$idEstudios]) && $nAlumnosPorEstudios[$idEstudios] > 0) {
-                        unset($fila['nAlumnosPorEstudios']); // Opcional: eliminar la columna nAlumnosPorEstudios del resultado
+                        unset($fila['nAlumnosPorEstudios']);
                         $empresas[$fila['cif']] = $fila;
                     }
                 } else {
@@ -141,7 +141,7 @@
                 throw new Exception('No se encontraron empresas para los estudios proporcionados.');
             }
         
-            return array_values($empresas); // Devuelve el array como un array indexado
+            return array_values($empresas);
         }
 
         public function obtenerEmpresasInactivas() {

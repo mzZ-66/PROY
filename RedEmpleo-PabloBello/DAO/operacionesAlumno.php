@@ -39,11 +39,10 @@
             $email = $nuevoAlumno->getEmail();
             $disponibilidad = $nuevoAlumno->getDisponibilidad();
             $ultimoAcceso = $nuevoAlumno->getUltimoAcceso();
-            $estudiosCentro = $nuevoAlumno->getEstudiosCentro();
             $estudiosExternos = $nuevoAlumno->getEstudiosExternos();
 
-            $consulta = $this->conexion->prepare("INSERT INTO alumno (dni, clave, nombre, apellidos, email, disponibilidad, ultimoAcceso, estudiosCentro, estudiosExternos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $consulta->bind_param("sssssisis", $dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosCentro, $estudiosExternos);
+            $consulta = $this->conexion->prepare("INSERT INTO alumno (dni, clave, nombre, apellidos, email, disponibilidad, ultimoAcceso, estudiosExternos) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $consulta->bind_param("sssssiss", $dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosExternos);
             $consulta->execute();
 
             // al ya estar creado el usuario, debo iniciar la sesión y guardar sus datos en una variable de sesión
@@ -58,7 +57,6 @@
                 'email' => $email,
                 'disponibilidad' => $disponibilidad,
                 'ultimoAcceso' => $ultimoAcceso,
-                'estudiosCentro' => $estudiosCentro,
                 'estudiosExternos' => $estudiosExternos
             ];
             $_SESSION['tipoUsuario'] = "alumno";
@@ -91,7 +89,6 @@
                     'email' => $alumno['email'],
                     'disponibilidad' => $alumno['disponibilidad'],
                     'ultimoAcceso' => $alumno['ultimoAcceso'],
-                    'estudiosCentro' => $alumno['estudiosCentro'],
                     'estudiosExternos' => $alumno['estudiosExternos'],
                 ];
                 $_SESSION['tipoUsuario'] = "alumno";
@@ -147,7 +144,12 @@
         }
 
         public function obtenerAlumnosDisponibles($perfilProfesional, $disponibilidad) {
-            $consulta = $this->conexion->prepare("SELECT * FROM alumno WHERE estudiosCentro = ? AND disponibilidad = ?;");
+            $consulta = $this->conexion->prepare("
+                SELECT alumno.*
+                FROM alumno
+                INNER JOIN alumno_estudios ON alumno.dni = alumno_estudios.alumno
+                WHERE alumno_estudios.estudios = ? AND alumno.disponibilidad = ?
+            ");
             $consulta->bind_param('ii', $perfilProfesional, $disponibilidad);
             $consulta->execute();
             $resultado = $consulta->get_result();
@@ -155,12 +157,20 @@
             while ($fila = $resultado->fetch_assoc()) {
                 $alumnos[] = $fila;
             }
-            $consulta->close(); // importante cerrar la consulta, ya que se van a usar DAOs diferentes en el mismo controlador
+            $consulta->close(); // importante cerrar la consulta
             return $alumnos;
         }
+        
 
         public function obtenerAlumnoPorDni($dni) {
-            $consulta = $this->conexion->prepare("SELECT * FROM alumno WHERE dni = ?;");
+            $consulta = $this->conexion->prepare("
+                SELECT alumno.*, GROUP_CONCAT(estudios.nombre SEPARATOR ', ') AS nombres_estudios
+                FROM alumno
+                LEFT JOIN alumno_estudios ON alumno.dni = alumno_estudios.alumno
+                LEFT JOIN estudios ON alumno_estudios.estudios = estudios.id
+                WHERE alumno.dni = ?
+                GROUP BY alumno.dni;
+            ");
             $consulta->bind_param("s", $dni);
             $consulta->execute();
             $resultado = $consulta->get_result();
@@ -168,9 +178,21 @@
             $consulta->close();
             return $alumno;
         }
+        
 
         public function obtenerAlumnosPorIdEstudios($idEstudios) {
-            $consulta = $this->conexion->prepare("SELECT * FROM alumno WHERE estudiosCentro = ?;");
+            $consulta = $this->conexion->prepare("
+                SELECT alumno.*, GROUP_CONCAT(estudios.nombre SEPARATOR ', ') AS nombres_estudios
+                FROM alumno
+                INNER JOIN alumno_estudios ON alumno.dni = alumno_estudios.alumno
+                INNER JOIN estudios ON alumno_estudios.estudios = estudios.id
+                WHERE alumno.dni IN (
+                    SELECT alumno
+                    FROM alumno_estudios
+                    WHERE estudios = ?
+                )
+                GROUP BY alumno.dni
+            ");
             $consulta->bind_param("i", $idEstudios);
             $consulta->execute();
             $resultado = $consulta->get_result();
@@ -184,6 +206,7 @@
             }
             return $alumnos;
         }
+        
 
         public function obtenerAlumnos() {
             $consulta = $this->conexion->prepare("SELECT * FROM alumno;");

@@ -629,7 +629,7 @@ function verListados() {
                             <th>Email</th>
                             <th>Disponibilidad</th>
                             <th>Último Acceso</th>
-                            <th>Estudios en Centro</th>
+                            <th>Estudios del Centro</th>
                             <th>Estudios Externos</th>
                         </tr>
                         <tr>
@@ -639,7 +639,7 @@ function verListados() {
                             <td>${data.alumno.email}</td>
                             <td>${data.alumno.disponibilidad}</td>
                             <td>${data.alumno.ultimoAcceso}</td>
-                            <td>${data.alumno.estudiosCentro}</td>
+                            <td>${data.alumno.nombres_estudios}</td>
                             <td>${data.alumno.estudiosExternos}</td>
                         </tr>
                     </table>
@@ -761,10 +761,6 @@ function filtrarPorPerfil() {
         botonBuscar.addEventListener('click', () => {
             enviarFormYObtenerDatos(formulario, 'c_obtenerEmpresasPorEstudio.php')
             .then(data => {
-                // if (data.error) {
-                //     toastr.error(data.error);
-                //     return;
-                // }
                 containerVariable.innerHTML = `
                     <h1 class="tituloVentana">Resultado de la búsqueda</h1>
                     <table>
@@ -827,7 +823,7 @@ function filtrarPorPerfil() {
                             <th>Email</th>
                             <th>Disponibilidad</th>
                             <th>Último Acceso</th>
-                            <th>Estudios en Centro</th>
+                            <th>Estudios del centro</th>
                             <th>Estudios Externos</th>
                         </tr>
                         ${data.alumnos.map(alumno => `
@@ -838,7 +834,7 @@ function filtrarPorPerfil() {
                                 <td>${alumno.email}</td>
                                 <td>${alumno.disponibilidad}</td>
                                 <td>${alumno.ultimoAcceso}</td>
-                                <td>${alumno.estudiosCentro}</td>
+                                <td>${alumno.nombres_estudios}</td>
                                 <td>${alumno.estudiosExternos}</td>
                             </tr>
                         `).join('')}

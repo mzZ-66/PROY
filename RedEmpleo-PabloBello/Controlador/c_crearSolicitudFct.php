@@ -10,7 +10,7 @@
     $nAlumnosPorEstudios = $_POST['numAlumnos'];
     $modalidadFct = $_POST['fctSelect'];
 
-    // conmvierto los datos a int
+    // convierto los datos a int
     foreach ($nAlumnosPorEstudios as $key => $value) {
         $nAlumnosPorEstudios[$key] = intval($value);
     }

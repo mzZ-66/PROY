@@ -215,7 +215,7 @@ function mostrarIndex() {
                                 <p><b>Email:</b> ${data.datosAlumno.email}</p>
                                 <input type="email" name="email" class="inputTexto">
                                 <p><b>Estudios cursados en el centro:</b></p>
-                                <select name="estudiosSelect" class="inputTexto">
+                                <select name="estudiosSelect[]" multiple>
                                     <option value="" disabled selected>Selecciona una opción</option>
                                 </select>
                                 <p><b>(Opcional) Otros estudios:</b></p>
@@ -237,7 +237,7 @@ function mostrarIndex() {
                         `;
 
                         let formulario = document.querySelector('.formulario');
-                        obtenerSelect('c_obtenerEstudios.php', 'estudiosSelect', 'nombre', 'id');
+                        obtenerSelect('c_obtenerEstudios.php', 'estudiosSelect[]', 'nombre', 'id');
                         toggleClave();
                         preventDefaultFormulario(formulario);
 
@@ -248,7 +248,7 @@ function mostrarIndex() {
                             if (!validarDatos(datosFormulario)) {
                                 return;
                             }
-                            let estudiosSelect = datosFormulario.get('estudiosSelect');
+                            let estudiosSelect = datosFormulario.get('estudiosSelect[]');
                             if (!estudiosSelect) {
                                 toastr.error('Elige tus estudios cursados');
                                 return false;

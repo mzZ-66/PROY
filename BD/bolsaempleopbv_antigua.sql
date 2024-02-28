@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2024 at 09:27 PM
+-- Generation Time: Feb 28, 2024 at 06:00 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `bolsaempleopbv`
 --
-CREATE DATABASE IF NOT EXISTS `bolsaempleopbv` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `bolsaempleopbv`;
 
 -- --------------------------------------------------------
 
@@ -58,6 +56,7 @@ CREATE TABLE `alumno` (
   `email` varchar(100) NOT NULL,
   `disponibilidad` tinyint(1) NOT NULL,
   `ultimoAcceso` date NOT NULL,
+  `estudiosCentro` int(5) NOT NULL,
   `estudiosExternos` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -65,13 +64,13 @@ CREATE TABLE `alumno` (
 -- Dumping data for table `alumno`
 --
 
-INSERT INTO `alumno` (`dni`, `clave`, `nombre`, `apellidos`, `email`, `disponibilidad`, `ultimoAcceso`, `estudiosExternos`) VALUES
-('05319965L', '$2y$10$L.uPzYPSIoIw9K1Vc/efWeKFGYRp7DRzQye/HskOMXDUJsGPk4MIW', 'Ted', 'Kaczynsksi', 'tedkaczynski@example.com', 0, '2024-02-22', 'Nada'),
-('11949813W', '$2y$10$zrmLLkUwjyesetgb/U4BZOH1nMR3mwxEJEFv0q3HaON/GuPqM8R3u', 'John', 'Doe', 'john.doe@example.com', 1, '2024-02-22', ''),
-('49215264W', '$2y$10$2uCLX7Ly0xHb3uaOJ5pEHuemoRbYbzAIcrEeVwhprGN.ornf77O2K', 'Pablo', 'Bello', 'pablobello0997@gmail.com', 0, '2024-02-28', 'TEST'),
-('52439891Y', '$2y$10$Wf4tYBHKeik/WA4m8I0p9eV.jG8W5aRavnXKiJfRiqRlT1bb1XAFi', 'Charlie', 'Brown', 'charlie.brown@example.com', 1, '2024-02-21', 'ASIR en Cuenca'),
-('56990880P', '$2y$10$X5qzUTewkjNmvVbryNERueoIBKx/jXJMfnVSWQd/q41n2SPX6DC52', 'Tom', 'Hatton', 'tomhatton@example.com', 1, '2024-02-22', 'asdasd'),
-('95448959V', '$2y$10$XSSEdbaSWYlu3HQK26RkceGil.JPUdWT9cY.6sNKjbyMi.ZAPitLa', 'Alice', 'Smith', 'alice.smith@example.com', 1, '2024-02-22', 'No');
+INSERT INTO `alumno` (`dni`, `clave`, `nombre`, `apellidos`, `email`, `disponibilidad`, `ultimoAcceso`, `estudiosCentro`, `estudiosExternos`) VALUES
+('05319965L', '$2y$10$L.uPzYPSIoIw9K1Vc/efWeKFGYRp7DRzQye/HskOMXDUJsGPk4MIW', 'Ted', 'Kaczynsksi', 'tedkaczynski@example.com', 0, '2024-02-22', 20, 'Nada'),
+('11949813W', '$2y$10$zrmLLkUwjyesetgb/U4BZOH1nMR3mwxEJEFv0q3HaON/GuPqM8R3u', 'John', 'Doe', 'john.doe@example.com', 1, '2024-02-22', 20, ''),
+('49215264W', '$2y$10$EmPWb1K/lrrZJqwXNtY0MOS/hiMrsYsYTjBd9D5aGcHACezkZ7uvO', 'Pablo', 'Bello', 'pablobello0997@gmail.com', 0, '2024-02-28', 20, 'No'),
+('52439891Y', '$2y$10$Wf4tYBHKeik/WA4m8I0p9eV.jG8W5aRavnXKiJfRiqRlT1bb1XAFi', 'Charlie', 'Brown', 'charlie.brown@example.com', 1, '2024-02-21', 21, 'ASIR en Cuenca'),
+('56990880P', '$2y$10$X5qzUTewkjNmvVbryNERueoIBKx/jXJMfnVSWQd/q41n2SPX6DC52', 'Tom', 'Hatton', 'tomhatton@example.com', 1, '2024-02-22', 21, 'asdasd'),
+('95448959V', '$2y$10$XSSEdbaSWYlu3HQK26RkceGil.JPUdWT9cY.6sNKjbyMi.ZAPitLa', 'Alice', 'Smith', 'alice.smith@example.com', 1, '2024-02-22', 21, 'No');
 
 -- --------------------------------------------------------
 
@@ -84,14 +83,6 @@ CREATE TABLE `alumno_estudios` (
   `alumno` varchar(9) NOT NULL,
   `estudios` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `alumno_estudios`
---
-
-INSERT INTO `alumno_estudios` (`id`, `alumno`, `estudios`) VALUES
-(1, '49215264W', 20),
-(2, '49215264W', 21);
 
 -- --------------------------------------------------------
 
@@ -113,7 +104,7 @@ CREATE TABLE `contrato` (
 
 INSERT INTO `contrato` (`id`, `empleado`, `empresa`, `tipoContrato`, `fechaContrato`) VALUES
 (12, '05319965L', 12345, 'indefinido', '2024-02-21'),
-(15, '49215264W', 12345, 'indefinido', '2024-02-28');
+(14, '49215264W', 12345, 'indefinido', '2024-02-28');
 
 -- --------------------------------------------------------
 
@@ -177,8 +168,7 @@ CREATE TABLE `fct` (
 --
 
 INSERT INTO `fct` (`id`, `alumno`, `empresa`, `modalidadFct`) VALUES
-(9, '52439891Y', 12345, 'normal'),
-(11, '49215264W', 12345, 'normal');
+(9, '52439891Y', 12345, 'normal');
 
 -- --------------------------------------------------------
 
@@ -231,8 +221,7 @@ CREATE TABLE `solicitudempleo` (
 
 INSERT INTO `solicitudempleo` (`id`, `empresaSolicitante`, `perfilProfesional`, `experiencia`, `posibilidadViajar`, `residenciaFavorita`, `descripcion`, `activa`) VALUES
 (12, 12345, 20, 'Menos de 1 año', 1, 'Albacete', 'Front dev', 0),
-(13, 12345, 20, 'Sin experiencia', 1, 'Albacete', 'test', 0),
-(14, 12345, 20, 'Sin experiencia', 1, 'Albacete', 'TEST', 0);
+(13, 12345, 20, 'Sin experiencia', 1, 'Albacete', 'test', 0);
 
 -- --------------------------------------------------------
 
@@ -253,8 +242,9 @@ CREATE TABLE `solicitudfct` (
 --
 
 INSERT INTO `solicitudfct` (`id`, `empresaSolicitante`, `nAlumnosPorEstudios`, `modalidadFct`, `nAlumnosPorEstudiosRestante`) VALUES
-(11, 12345, 'a:3:{i:20;i:4;i:21;i:2;i:22;i:6;}', 'normal', 'a:3:{i:20;i:4;i:21;i:0;i:22;i:6;}'),
-(12, 54321, 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}', 'dualTec', 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}');
+(11, 12345, 'a:3:{i:20;i:4;i:21;i:2;i:22;i:6;}', 'normal', 'a:3:{i:20;i:4;i:21;i:1;i:22;i:6;}'),
+(12, 54321, 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}', 'dualTec', 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}'),
+(16, 12345, 'a:3:{i:20;i:1;i:21;i:1;i:22;i:1;}', 'normal', 'a:3:{i:20;i:1;i:21;i:1;i:22;i:1;}');
 
 -- --------------------------------------------------------
 
@@ -292,7 +282,8 @@ ALTER TABLE `admin`
 -- Indexes for table `alumno`
 --
 ALTER TABLE `alumno`
-  ADD PRIMARY KEY (`dni`);
+  ADD PRIMARY KEY (`dni`),
+  ADD KEY `FK_estudiosCentro` (`estudiosCentro`);
 
 --
 -- Indexes for table `alumno_estudios`
@@ -366,13 +357,13 @@ ALTER TABLE `tutor`
 -- AUTO_INCREMENT for table `alumno_estudios`
 --
 ALTER TABLE `alumno_estudios`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contrato`
 --
 ALTER TABLE `contrato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `estudios`
@@ -384,23 +375,29 @@ ALTER TABLE `estudios`
 -- AUTO_INCREMENT for table `fct`
 --
 ALTER TABLE `fct`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `solicitudempleo`
 --
 ALTER TABLE `solicitudempleo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `solicitudfct`
 --
 ALTER TABLE `solicitudfct`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `alumno`
+--
+ALTER TABLE `alumno`
+  ADD CONSTRAINT `FK_estudiosCentro` FOREIGN KEY (`estudiosCentro`) REFERENCES `estudios` (`id`);
 
 --
 -- Constraints for table `alumno_estudios`

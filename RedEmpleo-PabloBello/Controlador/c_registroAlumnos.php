@@ -1,7 +1,8 @@
 <?php
     include "../DAO/operacionesAlumno.php";
+    include "../DAO/operacionesAlumno_estudios.php";
     include "../Modelo/Alumno.php";
-    include "../Modelo/Estudios.php";
+    include "../Modelo/Alumno_estudios.php";
     include "enviarMail.php";
 
     $dni = $_POST["dni"];
@@ -9,16 +10,22 @@
     $nombre = $_POST["nombre"];
     $apellidos = $_POST["apellidos"];
     $email = $_POST["email"];
-    $estudiosCentro = $_POST["estudiosSelect"];
+    $alumno_estudios = $_POST['estudiosSelect'];
     $estudiosExternos = $_POST["estudiosExternos"];
     $ultimoAcceso = date("Y-m-d");
     $disponibilidad = $_POST["disponibilidad"];
 
-    $db = new operacionesAlumno();
     try {
-        $nuevoAlumno = new Alumno($dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosCentro, $estudiosExternos);
+        $operacionesAlumno = new operacionesAlumno();
+        $nuevoAlumno = new Alumno($dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosExternos);
+        $operacionesAlumno->registrarAlumno($nuevoAlumno);
 
-        $db->registrarAlumno($nuevoAlumno);
+        $operacionesAlumno_estudios = new operacionesAlumno_estudios();
+        foreach ($alumno_estudios as $estudio) {
+            $nuevoAlumno_estudios = new Alumno_estudios(null, $dni, $estudio);
+            $operacionesAlumno_estudios->registrarAlumno_estudios($nuevoAlumno_estudios);
+        }
+
         $mensajeEmail = "
             <p>Te has registrado correctamente en RedEmpleo como alumno. Tu DNI es tu usuario:</p>
             <p><b>" . $dni . "</b></p>

@@ -7,11 +7,10 @@
         private $email;
         private $disponibilidad;
         private $ultimoAcceso;
-        private $estudiosCentro;
         private $estudiosExternos;
 
 
-        public function __construct($dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosCentro, $estudiosExternos) {
+        public function __construct($dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosExternos) {
             $this->setDni($dni);
             $this->setClave($clave);
             $this->setNombre($nombre);
@@ -19,7 +18,6 @@
             $this->setEmail($email);
             $this->setDisponibilidad($disponibilidad);
             $this->setUltimoAcceso($ultimoAcceso);
-            $this->setEstudiosCentro($estudiosCentro);
             $this->setEstudiosExternos($estudiosExternos);
         }
         
@@ -72,13 +70,6 @@
             $this->ultimoAcceso = $ultimoAcceso;
         }
 
-        public function getEstudiosCentro() {
-            return $this->estudiosCentro;
-        }
-        public function setEstudiosCentro($estudiosCentro) {
-            $this->estudiosCentro = $estudiosCentro;
-        }
-
         public function getEstudiosExternos() {
             return $this->estudiosExternos;
         }
@@ -93,7 +84,6 @@
                 "Email: " . $this->getEmail() . "<br>" .
                 "Disponibilidad: " . $this->getDisponibilidad() . "<br>" .
                 "UltimoAcceso: " . $this->getUltimoAcceso() . "<br>" .
-                "EstudiosCentro: " . $this->getEstudiosCentro()->__toString() . "<br>" .
                 "EstudiosExternos: " . $this->getEstudiosExternos() . "<br>";
         }
     }

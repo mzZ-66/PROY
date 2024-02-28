@@ -27,15 +27,5 @@
             $consulta->close();
             return $estudios["nombre"];
         }
-
-        // function registrarEstudios($nuevosEstudios) {
-        //     $estudiosCentro = $nuevosEstudios->getEstudiosCentro();
-        //     $estudiosExternos = $nuevosEstudios->getEstudiosExternos();
-
-        //     $consulta = $this->conexion->prepare("INSERT INTO estudios (estudiosCentro, estudiosExternos) VALUES (?, ?)");
-        //     $consulta->bind_param("ss", $estudiosCentro, $estudiosExternos);
-        //     $consulta->execute();
-        //     return $this->conexion->insert_id;
-        // }
     }
 ?>
