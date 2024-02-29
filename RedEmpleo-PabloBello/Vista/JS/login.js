@@ -216,8 +216,8 @@ function mostrarIndex() {
                                 <input type="email" name="email" class="inputTexto">
                                 <p><b>Estudios cursados en el centro:</b></p>
                                 <select name="estudiosSelect[]" multiple>
-                                    <option value="" disabled selected>Selecciona una opción</option>
-                                </select>
+                                    <option value="" disabled selected>Selecciona una o más opciones (Pulsa Ctrl)</option>
+                                </select><br>
                                 <p><b>(Opcional) Otros estudios:</b></p>
                                 <textarea name="estudiosExternos" placeholder="Especifica el nivel y especialidad"></textarea>
                                 <p><b>Disponibilidad para trabajar:</b></p>

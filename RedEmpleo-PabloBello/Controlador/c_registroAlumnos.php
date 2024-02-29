@@ -17,7 +17,7 @@
 
     try {
         $operacionesAlumno = new operacionesAlumno();
-        $nuevoAlumno = new Alumno($dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosExternos);
+        $nuevoAlumno = new Alumno($dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosExternos, 1);
         $operacionesAlumno->registrarAlumno($nuevoAlumno);
 
         $operacionesAlumno_estudios = new operacionesAlumno_estudios();

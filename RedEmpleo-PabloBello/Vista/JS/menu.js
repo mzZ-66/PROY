@@ -54,8 +54,8 @@ function mostrarMenu() {
             containerWrapper.innerHTML = `
                 <div class="menu-wrapper">
                     <div class="menu-item" id="hacerSolicitudBoton">
-                        <img src="https://www.svgrepo.com/show/435935/request-new.svg" alt="Hacer solicitud">
-                        <p>Hacer solicitud</p>
+                        <img src="https://www.svgrepo.com/show/435935/request-new.svg" alt="Hacer solicitud  de empleo">
+                        <p>Hacer solicitud de empleo</p>
                     </div>
                     <div class="menu-item" id="contratarBoton">
                         <img src="https://www.svgrepo.com/show/435934/request-approval.svg" alt="Contratar">
@@ -857,7 +857,7 @@ function mostrarPerfil() {
         case 'alumno':
             containerVariable.innerHTML = `
                 <div class="button-wrapper">
-                    <button id="anadirEstudiosExternos" class="boton">Añadir estudios externos</button>
+                    <button id="anadirEstudiosExternos" class="boton">Añadir estudios</button>
                     <button id="cambiarDisponibilidad" class="boton">Cambiar disponibilidad</button>
                     <button id="cambiarClave" class="boton">Cambiar clave</button>
                     <button id="cerrarSesion" class="boton botonRojo">Cerrar sesión</button>
@@ -884,12 +884,18 @@ function mostrarPerfil() {
                             let estudiosExternos = data.estudiosExternos || '';
                             let containerVariable = document.getElementById('containerVariable');
                             containerVariable.innerHTML = `
-                                <p style="margin-bottom: 1rem;">Puedes editar tus estudios externos modificando este cuadro de texto.</p>
                                 <form class="formulario">
+                                    <p style="margin-bottom: 1rem;">Puedes añadir tus estudios del centro en el siguiente desplegable (Pulsa Ctrl).</p>
+                                    <select name="estudiosSelect[]" multiple>
+                                        <option value="" disabled selected>Selecciona una o más opciones (Pulsa Ctrl)</option>
+                                    </select><br><br>
+
+                                    <p style="margin-bottom: 1rem;">Puedes editar tus estudios externos modificando este cuadro de texto.</p>
                                     <textarea name="estudiosExternos">${estudiosExternos}</textarea>
                                 </form>
                                 <button id="guardarEstudiosExternos" class="boton">Guardar</button>
                             `;
+                        obtenerSelect('c_obtenerEstudios.php', 'estudiosSelect[]', 'nombre', 'id');
                             let guardarEstudiosExternos = document.getElementById('guardarEstudiosExternos');
                             guardarEstudiosExternos.addEventListener('click', () => {
                                 let formulario = document.querySelector('.formulario');

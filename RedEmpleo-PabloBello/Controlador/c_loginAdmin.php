@@ -1,20 +1,24 @@
 <?php
     include "../DAO/operacionesAdmin.php";
+    include "../DAO/operacionesAviso.php";
     include "../DAO/operacionesAlumno.php";
     include "../DAO/operacionesEmpresa.php";
+    include "../Modelo/Aviso.php";
     include "enviarMail.php";
 
     $dni = $_POST["dni"];
     $clave = $_POST["clave"];
 
+    $ahora = date("Y-m-d");
+    $mensajeAvisoInactividad = null;
+    $operacionesAlumno = new operacionesAlumno();
+    $operacionesAviso = new operacionesAviso();
+
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    // TODO: gestionar la baja de cuentas inactivas
-    // comprobaciones de acceso y peticiones de los alumnos y empresas
-    $mensajeAvisoInactividad = null;
 
-    $operacionesAlumno = new operacionesAlumno();
+    // comprobaciones de acceso de los alumnos
     $alumnosInactivos = $operacionesAlumno->obtenerAlumnosInactivos();
     if (!empty($alumnosInactivos)) {
         $mensajeEmail = "
@@ -24,10 +28,14 @@
         ";
         foreach ($alumnosInactivos as $alumno) {
             enviarMail("AVISO: Cuenta de alumno inactiva", $mensajeEmail, $alumno['email']);
+
+            $nuevoAviso = new Aviso(null, $alumno['email'], $ahora);
+            $operacionesAviso->crearAviso($nuevoAviso);
             $mensajeAvisoInactividad = "Se ha enviado un aviso a los alumnos inactivos.";
         }
     }
 
+    // comprobaciones de peticiones de las empresas
     $operacionesEmpresa = new operacionesEmpresa();
     $empresasInactivas = $operacionesEmpresa->obtenerEmpresasInactivas();
     if (!empty($empresasInactivas)) {
@@ -38,10 +46,22 @@
         ";
         foreach ($empresasInactivas as $empresa) {
             enviarMail("AVISO: Cuenta de empresa inactiva", $mensajeEmail, $empresa['email']);
+
+            $nuevoAviso = new Aviso(null, $empresa['email'], $ahora);
+            $operacionesAviso->crearAviso($nuevoAviso);
             $mensajeAvisoInactividad = "Se ha enviado un aviso a las empresas inactivos.";
         }
     }
 
+    // compruebo si han pasado 30 días desde que se envió el aviso, y si es así se dan de baja
+    $emailDeUsuariosADarDeBaja = $operacionesAviso->comprobarAvisos();
+    if (!empty($emailDeUsuariosADarDeBaja)) {
+        $operacionesAlumno->darDeBajaAlumnoPorEmail($emailDeUsuariosADarDeBaja);
+        $operacionesEmpresa->darDeBajaEmpresaPorEmail($emailDeUsuariosADarDeBaja);
+        $mensajeAvisoInactividad = "Se han dado de baja a los usuarios inactivos.";
+    }
+
+    
     // login del admin
     try {
         $db = new operacionesAdmin();

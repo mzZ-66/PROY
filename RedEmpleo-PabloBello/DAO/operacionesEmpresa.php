@@ -154,5 +154,11 @@
             }
             return $empresasInactivas;
         }
+
+        public function darDebajaEmpresaPorEmail($email) {
+            $consulta = $this->conexion->prepare("UPDATE empresa SET activo = 0 WHERE email = ?;");
+            $consulta->bind_param("s", $email);
+            $consulta->execute();
+        }
     }
 ?>

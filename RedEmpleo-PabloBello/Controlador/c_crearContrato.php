@@ -27,7 +27,7 @@
 
         // obtengo los datos del alumno
         $operacionesAlumno = new operacionesAlumno();
-        $alumno = $operacionesAlumno->obtenerAlumnoPorDni($dni); // TODO: comprobar que esto funciona bien, ya que he cambiado el método por la reestrcturacion de los estudios
+        $alumno = $operacionesAlumno->obtenerAlumnoPorDni($dni);
         // y actualizo su disponibilidad a ocupado
         $operacionesAlumno->actualizarDisponibilidad($dni, 0);
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2024 at 09:27 PM
+-- Generation Time: Feb 29, 2024 at 02:18 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -42,7 +42,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`dni`, `clave`, `nombre`, `apellidos`, `email`) VALUES
-('93376960L', '$2y$10$StRjFJUY.GQtL0XEdk/BcON0NWLIKLY6do8nrqPei.tT79uVLdE5O', 'WhatsApp', 'Gonzalez', 'whatsappgonzalez@example.com');
+('28380897R', '$2y$10$as1tjGTS0tFVPmZTqW1GOe5Lsdkdblr5ZLtP/vsI6tJ29/bMHIslK', 'Giga', 'Chad', 'gigachad@example.com');
 
 -- --------------------------------------------------------
 
@@ -58,20 +58,18 @@ CREATE TABLE `alumno` (
   `email` varchar(100) NOT NULL,
   `disponibilidad` tinyint(1) NOT NULL,
   `ultimoAcceso` date NOT NULL,
-  `estudiosExternos` varchar(1000) NOT NULL
+  `estudiosExternos` varchar(1000) NOT NULL,
+  `activo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `alumno`
 --
 
-INSERT INTO `alumno` (`dni`, `clave`, `nombre`, `apellidos`, `email`, `disponibilidad`, `ultimoAcceso`, `estudiosExternos`) VALUES
-('05319965L', '$2y$10$L.uPzYPSIoIw9K1Vc/efWeKFGYRp7DRzQye/HskOMXDUJsGPk4MIW', 'Ted', 'Kaczynsksi', 'tedkaczynski@example.com', 0, '2024-02-22', 'Nada'),
-('11949813W', '$2y$10$zrmLLkUwjyesetgb/U4BZOH1nMR3mwxEJEFv0q3HaON/GuPqM8R3u', 'John', 'Doe', 'john.doe@example.com', 1, '2024-02-22', ''),
-('49215264W', '$2y$10$2uCLX7Ly0xHb3uaOJ5pEHuemoRbYbzAIcrEeVwhprGN.ornf77O2K', 'Pablo', 'Bello', 'pablobello0997@gmail.com', 0, '2024-02-28', 'TEST'),
-('52439891Y', '$2y$10$Wf4tYBHKeik/WA4m8I0p9eV.jG8W5aRavnXKiJfRiqRlT1bb1XAFi', 'Charlie', 'Brown', 'charlie.brown@example.com', 1, '2024-02-21', 'ASIR en Cuenca'),
-('56990880P', '$2y$10$X5qzUTewkjNmvVbryNERueoIBKx/jXJMfnVSWQd/q41n2SPX6DC52', 'Tom', 'Hatton', 'tomhatton@example.com', 1, '2024-02-22', 'asdasd'),
-('95448959V', '$2y$10$XSSEdbaSWYlu3HQK26RkceGil.JPUdWT9cY.6sNKjbyMi.ZAPitLa', 'Alice', 'Smith', 'alice.smith@example.com', 1, '2024-02-22', 'No');
+INSERT INTO `alumno` (`dni`, `clave`, `nombre`, `apellidos`, `email`, `disponibilidad`, `ultimoAcceso`, `estudiosExternos`, `activo`) VALUES
+('05319965L', '$2y$10$wBSNpZUcKavYeepET2tZ5O.FvrK4i6V4WYGogfFwUwlcSkvKrrYsK', 'Ted', 'Kaczynsksi', 'tedkaczynski@example.com', 0, '2024-02-29', '3 meses en Softtek', 1),
+('11949813W', '$2y$10$egREaRBpUHSN68PbhZVyIu7FKY6COwfCIAQtwdbZZJ4j4p5yYe1oq', 'John', 'Doe', 'john.doe@example.com', 1, '2024-02-29', 'Nada', 1),
+('52439891Y', '$2y$10$Vm9Yav3dunofsX7vr5iDMe7gw9PZgm9JLeQx56K2um3UbvfhlH1kK', 'Charlie', 'Brown', 'charlie.brown@example.com', 1, '2023-02-28', '', 1);
 
 -- --------------------------------------------------------
 
@@ -90,8 +88,30 @@ CREATE TABLE `alumno_estudios` (
 --
 
 INSERT INTO `alumno_estudios` (`id`, `alumno`, `estudios`) VALUES
-(1, '49215264W', 20),
-(2, '49215264W', 21);
+(8, '05319965L', 20),
+(9, '05319965L', 21),
+(10, '05319965L', 22),
+(11, '11949813W', 22),
+(12, '52439891Y', 21);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aviso`
+--
+
+CREATE TABLE `aviso` (
+  `id` int(5) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `aviso`
+--
+
+INSERT INTO `aviso` (`id`, `email`, `fecha`) VALUES
+(5, 'charlie.brown@example.com', '2024-02-29');
 
 -- --------------------------------------------------------
 
@@ -112,8 +132,7 @@ CREATE TABLE `contrato` (
 --
 
 INSERT INTO `contrato` (`id`, `empleado`, `empresa`, `tipoContrato`, `fechaContrato`) VALUES
-(12, '05319965L', 12345, 'indefinido', '2024-02-21'),
-(15, '49215264W', 12345, 'indefinido', '2024-02-28');
+(16, '05319965L', 12345, 'indefinido', '2024-02-29');
 
 -- --------------------------------------------------------
 
@@ -135,8 +154,7 @@ CREATE TABLE `empresa` (
 --
 
 INSERT INTO `empresa` (`cif`, `clave`, `nombre`, `email`, `ultimaPeticion`, `empleadora`) VALUES
-(12345, '$2y$10$ksCFn2q4KuqstvIGuVF0n.ZZ0gV5iO3tC8mPyzNJJ0Fuyk.FTjtUO', 'Test', 'pablobello0997@gmail.com', '2024-02-28', 1),
-(54321, '$2y$10$3ZeJ3TzxXgmMFsQiaof4zuqQYX/3t1EQP74SEQz5NA.Yst5JV2Ay6', 'Test2', 'test2@example.com', '2024-02-21', 0);
+(12345, '$2y$10$gotJtJZiBwAf4NNS185TweJJTAEm4QEGxq5IvinIvTLhEq4wQEwAm', 'Empresa S.L.', 'empresasl@example.com', '2024-02-29', 1);
 
 -- --------------------------------------------------------
 
@@ -177,8 +195,7 @@ CREATE TABLE `fct` (
 --
 
 INSERT INTO `fct` (`id`, `alumno`, `empresa`, `modalidadFct`) VALUES
-(9, '52439891Y', 12345, 'normal'),
-(11, '49215264W', 12345, 'normal');
+(12, '05319965L', 12345, 'dualTec');
 
 -- --------------------------------------------------------
 
@@ -203,7 +220,6 @@ INSERT INTO `registroalumnos` (`dni`, `nombre`, `apellidos`, `email`, `titulado`
 ('11949813W', 'John', 'Doe', 'john.doe@example.com', 1),
 ('14399207B', 'Jane', 'Doe', 'jane.doe@example.com', 0),
 ('28380897R', 'Bob', 'Johnson', 'bob.johnson@example.com', 0),
-('49215264W', 'Pablo', 'Bello', 'pablobello0997@gmail.com', 1),
 ('52439891Y', 'Charlie', 'Brown', 'charlie.brown@example.com', 1),
 ('56990880P', 'Tom', 'Hatton', 'tomhatton@example.com', 1),
 ('95448959V', 'Alice', 'Smith', 'alice.smith@example.com', 1);
@@ -230,9 +246,7 @@ CREATE TABLE `solicitudempleo` (
 --
 
 INSERT INTO `solicitudempleo` (`id`, `empresaSolicitante`, `perfilProfesional`, `experiencia`, `posibilidadViajar`, `residenciaFavorita`, `descripcion`, `activa`) VALUES
-(12, 12345, 20, 'Menos de 1 año', 1, 'Albacete', 'Front dev', 0),
-(13, 12345, 20, 'Sin experiencia', 1, 'Albacete', 'test', 0),
-(14, 12345, 20, 'Sin experiencia', 1, 'Albacete', 'TEST', 0);
+(17, 12345, 20, 'Sin experiencia', 1, 'Albacete', 'Ingenierio de Front\r\n', 0);
 
 -- --------------------------------------------------------
 
@@ -253,8 +267,7 @@ CREATE TABLE `solicitudfct` (
 --
 
 INSERT INTO `solicitudfct` (`id`, `empresaSolicitante`, `nAlumnosPorEstudios`, `modalidadFct`, `nAlumnosPorEstudiosRestante`) VALUES
-(11, 12345, 'a:3:{i:20;i:4;i:21;i:2;i:22;i:6;}', 'normal', 'a:3:{i:20;i:4;i:21;i:0;i:22;i:6;}'),
-(12, 54321, 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}', 'dualTec', 'a:3:{i:20;i:0;i:21;i:0;i:22;i:1;}');
+(18, 12345, 'a:3:{i:20;i:2;i:21;i:1;i:22;i:0;}', 'dualTec', 'a:3:{i:20;i:1;i:21;i:1;i:22;i:0;}');
 
 -- --------------------------------------------------------
 
@@ -276,7 +289,7 @@ CREATE TABLE `tutor` (
 --
 
 INSERT INTO `tutor` (`dni`, `clave`, `nombre`, `apellidos`, `email`, `estudiosTutoria`) VALUES
-('92601489Q', '$2y$10$SJKMXk4kKB651Onmn.H6o.wz6XxEU/uX5DXUqvpxFJrmvE8gwy1uK', 'Jon', 'Snow', 'jonsnow@example.com', 21);
+('76110594Y', '$2y$10$as1tjGTS0tFVPmZTqW1GOe5Lsdkdblr5ZLtP/vsI6tJ29/bMHIslK', 'Locura', 'Gonzalez', 'locuragonzalez@example.com', 20);
 
 --
 -- Indexes for dumped tables
@@ -301,6 +314,12 @@ ALTER TABLE `alumno_estudios`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_alumno2` (`alumno`),
   ADD KEY `FK_estudios` (`estudios`);
+
+--
+-- Indexes for table `aviso`
+--
+ALTER TABLE `aviso`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `contrato`
@@ -366,13 +385,19 @@ ALTER TABLE `tutor`
 -- AUTO_INCREMENT for table `alumno_estudios`
 --
 ALTER TABLE `alumno_estudios`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `aviso`
+--
+ALTER TABLE `aviso`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `contrato`
 --
 ALTER TABLE `contrato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `estudios`
@@ -384,19 +409,19 @@ ALTER TABLE `estudios`
 -- AUTO_INCREMENT for table `fct`
 --
 ALTER TABLE `fct`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `solicitudempleo`
 --
 ALTER TABLE `solicitudempleo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `solicitudfct`
 --
 ALTER TABLE `solicitudfct`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables

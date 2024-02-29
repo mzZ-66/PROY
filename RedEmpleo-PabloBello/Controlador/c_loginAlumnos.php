@@ -10,6 +10,7 @@
     }
 
     try {
+        $db->estaDeBaja($dni);
         $db->loginAlumno($dni, $clave);
         echo json_encode(['mensaje' => 'Login correcto']);
     } catch (Exception $e) {

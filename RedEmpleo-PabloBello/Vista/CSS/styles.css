@@ -178,6 +178,25 @@ textarea {
     transition: .25s;
 }
 
+select[name="estudiosSelect[]"] {
+    width: 90%;
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    overflow-y: auto;
+}
+
+select[name="estudiosSelect[]"] option {
+    padding: 10px;
+}
+
+select[name="estudiosSelect[]"]:focus option:checked {
+    background: #ad5492 linear-gradient(0deg, #ad5492 0%, #ad5492 100%);
+  }
+
 #toggleButton {
     position: absolute;
     right: 0;

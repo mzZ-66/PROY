@@ -40,9 +40,10 @@
             $disponibilidad = $nuevoAlumno->getDisponibilidad();
             $ultimoAcceso = $nuevoAlumno->getUltimoAcceso();
             $estudiosExternos = $nuevoAlumno->getEstudiosExternos();
+            $activo = $nuevoAlumno->getActivo();
 
-            $consulta = $this->conexion->prepare("INSERT INTO alumno (dni, clave, nombre, apellidos, email, disponibilidad, ultimoAcceso, estudiosExternos) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $consulta->bind_param("sssssiss", $dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosExternos);
+            $consulta = $this->conexion->prepare("INSERT INTO alumno (dni, clave, nombre, apellidos, email, disponibilidad, ultimoAcceso, estudiosExternos, activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $consulta->bind_param("sssssissi", $dni, $clave, $nombre, $apellidos, $email, $disponibilidad, $ultimoAcceso, $estudiosExternos, $activo);
             $consulta->execute();
 
             // al ya estar creado el usuario, debo iniciar la sesión y guardar sus datos en una variable de sesión
@@ -57,7 +58,8 @@
                 'email' => $email,
                 'disponibilidad' => $disponibilidad,
                 'ultimoAcceso' => $ultimoAcceso,
-                'estudiosExternos' => $estudiosExternos
+                'estudiosExternos' => $estudiosExternos,
+                'activo' => $activo
             ];
             $_SESSION['tipoUsuario'] = "alumno";
         }
@@ -90,6 +92,7 @@
                     'disponibilidad' => $alumno['disponibilidad'],
                     'ultimoAcceso' => $alumno['ultimoAcceso'],
                     'estudiosExternos' => $alumno['estudiosExternos'],
+                    'activo' => $alumno['activo']
                 ];
                 $_SESSION['tipoUsuario'] = "alumno";
                 return $_SESSION['alumno'];
@@ -230,6 +233,23 @@
                 $alumnosInactivos[] = $alumno;
             }
             return $alumnosInactivos;
+        }
+
+        public function estaDeBaja($dni) {
+            $consulta = $this->conexion->prepare("SELECT * FROM alumno WHERE dni = ?;");
+            $consulta->bind_param("s", $dni);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $alumno = $resultado->fetch_assoc();
+            if ($alumno['activo'] == 0) {
+                throw new Exception("El alumno especificado está de baja");
+            }
+        }
+
+        public function darDeBajaAlumnoPorEmail($email) {
+            $consulta = $this->conexion->prepare("UPDATE alumno SET activo = 0 WHERE email = ?;");
+            $consulta->bind_param("s", $email);
+            $consulta->execute();
         }
     }
 ?>
