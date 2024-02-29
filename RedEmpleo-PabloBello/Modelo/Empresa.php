@@ -6,14 +6,16 @@
         private $email;
         private $ultimaPeticion;
         private $empleadora;
+        private $activo;
 
-        public function __construct($cif, $clave, $nombre, $email, $ultimaPeticion, $empleadora) {
+        public function __construct($cif, $clave, $nombre, $email, $ultimaPeticion, $empleadora, $activo) {
             $this->setCif($cif);
             $this->setClave($clave);
             $this->setNombre($nombre);
             $this->setEmail($email);
             $this->setUltimaPeticion($ultimaPeticion);
             $this->setEmpleadora($empleadora);
+            $this->setActivo($activo);
         }
 
         public function getCif() {
@@ -58,13 +60,21 @@
             $this->empleadora = $empleadora;
         }
 
+        public function getActivo() {
+            return $this->activo;
+        }
+        function setActivo($activo) {
+            $this->activo = $activo;
+        }
+
         public function __toString() {
             return "cif: " . $this->getCif() . "<br>" .
                     "clave: " . $this->getClave() . "<br>" .
                     "nombre: " . $this->getNombre() . "<br>" .
                     "email: " . $this->getEmail() . "<br>" .
                     "ultimaPeticion: " . $this->getUltimaPeticion() . "<br>" .
-                    "empleadora: " . $this->getEmpleadora() . "<br>";
+                    "empleadora: " . $this->getEmpleadora() . "<br>" .
+                    "activo: " . $this->getActivo() . "<br>";
         }
     }
 ?>

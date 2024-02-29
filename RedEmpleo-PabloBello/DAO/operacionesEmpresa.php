@@ -14,9 +14,10 @@
             $email = $nuevaEmpresa->getEmail();
             $ultimaPeticion = $nuevaEmpresa->getUltimaPeticion();
             $empleadora = $nuevaEmpresa->getEmpleadora();
+            $activo = $nuevaEmpresa->getActivo();
 
-            $consulta = $this->conexion->prepare("INSERT INTO empresa (cif, clave, nombre, email, ultimaPeticion, empleadora) VALUES (?, ?, ?, ?, ?, ?)");
-            $consulta->bind_param("issssi", $cif, $clave, $nombre, $email, $ultimaPeticion, $empleadora);
+            $consulta = $this->conexion->prepare("INSERT INTO empresa (cif, clave, nombre, email, ultimaPeticion, empleadora, activo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $consulta->bind_param("issssii", $cif, $clave, $nombre, $email, $ultimaPeticion, $empleadora, $activo);
             $consulta->execute();
 
             // al ya estar creada la empresa, debo iniciar la sesión y guardar sus datos en una variable de sesión
@@ -29,7 +30,8 @@
                 'nombre' => $nombre,
                 'email' => $email,
                 'ultimaPeticion' => $ultimaPeticion,
-                'empleadora' => $empleadora
+                'empleadora' => $empleadora,
+                'activo' => $activo
             ];
             $_SESSION['tipoUsuario'] = "empresa";
         }
@@ -54,7 +56,8 @@
                     'nombre' => $empresa['nombre'],
                     'email' => $empresa['email'],
                     'ultimaPeticion' => $empresa['ultimaPeticion'],
-                    'empleadora' => $empresa['empleadora']
+                    'empleadora' => $empresa['empleadora'],
+                    'activo' => $empresa['activo']
                 ];
                 $_SESSION['tipoUsuario'] = "empresa";
                 return $_SESSION['empresa'];
@@ -155,10 +158,38 @@
             return $empresasInactivas;
         }
 
+        public function estaDeBaja($cif) {
+            $consulta = $this->conexion->prepare("SELECT * FROM empresa WHERE cif = ?;");
+            $consulta->bind_param("i", $cif);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $empresa = $resultado->fetch_assoc();
+            if ($empresa['activo'] == 0) {
+                throw new Exception("La empresa especificada está de baja");
+            }
+        }
+
+        public function borrarAvisoSiLoEsta($cif) {
+            $consulta = $this->conexion->prepare("DELETE FROM aviso WHERE email = (SELECT email FROM empresa WHERE cif = ?);");
+            $consulta->bind_param("s", $cif);
+            $consulta->execute();
+        }
+
         public function darDebajaEmpresaPorEmail($email) {
             $consulta = $this->conexion->prepare("UPDATE empresa SET activo = 0 WHERE email = ?;");
             $consulta->bind_param("s", $email);
             $consulta->execute();
+        }
+
+        public function isActivo($cif) {
+            $consulta = $this->conexion->prepare("SELECT activo FROM empresa WHERE cif = ?;");
+            $consulta->bind_param("i", $cif);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $empresa = $resultado->fetch_assoc();
+            if ($empresa['activo'] == 0) {
+                return false;
+            } else return true;
         }
     }
 ?>

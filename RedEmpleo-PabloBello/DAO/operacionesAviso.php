@@ -7,23 +7,25 @@
             $this->conexion = $conexion->getConexion();
         }
 
+        public function comprobarAvisoPorEmail($email) {
+            $consulta = $this->conexion->prepare("SELECT * FROM aviso WHERE email = ?");
+            $consulta->bind_param("s", $email);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $consulta->close();
+            if ($resultado->num_rows > 0) {
+                return true;
+            } else return false;
+        }
+
         public function crearAviso($aviso) {
             $email = $aviso->getEmail();
             $fecha = $aviso->getFecha();
 
-            // primero verifico si ya existe la entrada
-            $consulta = $this->conexion->prepare("SELECT * FROM aviso WHERE email = ?");
-            $consulta->bind_param("s", $email);
+            $consulta = $this->conexion->prepare("INSERT INTO aviso (email, fecha) VALUES (?, ?)");
+            $consulta->bind_param("ss", $email, $fecha);
             $consulta->execute();
-            $result = $consulta->get_result();
-        
-            // si no existe, entonces inserto los datos
-            if ($result->num_rows == 0) {
-                $consulta = $this->conexion->prepare("INSERT INTO aviso (email, fecha) VALUES (?, ?)");
-                $consulta->bind_param("ss", $email, $fecha);
-                $consulta->execute();
-                $consulta->close();
-            }
+            $consulta->close();
         }
 
         public function eliminarAviso($id) {
@@ -33,7 +35,7 @@
             $consulta->close();
         }
 
-        public function comprobarAvisos() { // TODO: DEBUGGEAR ESTO
+        public function comprobarAvisos() {
             $consulta = $this->conexion->prepare("SELECT * FROM aviso");
             $consulta->execute();
             $resultado = $consulta->get_result();

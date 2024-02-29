@@ -10,6 +10,8 @@
     }
 
     try {
+        $db->estaDeBaja($cif);
+        $db->borrarAvisoSiLoEsta($cif);
         $db->loginEmpresa($cif, $clave);
         echo json_encode(['mensaje' => 'Login correcto']);
     } catch (Exception $e) {

@@ -27,11 +27,14 @@
             <p>- Equipo de RedEmpleo</p>
         ";
         foreach ($alumnosInactivos as $alumno) {
-            enviarMail("AVISO: Cuenta de alumno inactiva", $mensajeEmail, $alumno['email']);
-
-            $nuevoAviso = new Aviso(null, $alumno['email'], $ahora);
-            $operacionesAviso->crearAviso($nuevoAviso);
-            $mensajeAvisoInactividad = "Se ha enviado un aviso a los alumnos inactivos.";
+            if ($operacionesAlumno->isActivo($alumno['dni'])) {
+                if (!$operacionesAviso->comprobarAvisoPorEmail($alumno['email'])) {
+                    enviarMail("AVISO: Cuenta de alumno inactiva", $mensajeEmail, $alumno['email']);
+                    $nuevoAviso = new Aviso(null, $alumno['email'], $ahora);
+                    $operacionesAviso->crearAviso($nuevoAviso);
+                    $mensajeAvisoInactividad = "Se ha enviado un aviso a los alumnos inactivos.";
+                }
+            }
         }
     }
 
@@ -45,19 +48,24 @@
             <p>- Equipo de RedEmpleo</p>
         ";
         foreach ($empresasInactivas as $empresa) {
-            enviarMail("AVISO: Cuenta de empresa inactiva", $mensajeEmail, $empresa['email']);
-
-            $nuevoAviso = new Aviso(null, $empresa['email'], $ahora);
-            $operacionesAviso->crearAviso($nuevoAviso);
-            $mensajeAvisoInactividad = "Se ha enviado un aviso a las empresas inactivos.";
+            if ($operacionesEmpresa->isActivo($empresa['cif'])) {
+                if (!$operacionesAviso->comprobarAvisoPorEmail($empresa['email'])) {
+                    enviarMail("AVISO: Cuenta de empresa inactiva", $mensajeEmail, $empresa['email']);
+                    $nuevoAviso = new Aviso(null, $empresa['email'], $ahora);
+                    $operacionesAviso->crearAviso($nuevoAviso);
+                    $mensajeAvisoInactividad = "Se ha enviado un aviso a las empresas inactivos.";
+                }
+            }
         }
     }
 
     // compruebo si han pasado 30 días desde que se envió el aviso, y si es así se dan de baja
     $emailDeUsuariosADarDeBaja = $operacionesAviso->comprobarAvisos();
     if (!empty($emailDeUsuariosADarDeBaja)) {
-        $operacionesAlumno->darDeBajaAlumnoPorEmail($emailDeUsuariosADarDeBaja);
-        $operacionesEmpresa->darDeBajaEmpresaPorEmail($emailDeUsuariosADarDeBaja);
+        foreach ($emailDeUsuariosADarDeBaja as $email) {
+            $operacionesAlumno->darDeBajaAlumnoPorEmail($email);
+            $operacionesEmpresa->darDeBajaEmpresaPorEmail($email);
+        }
         $mensajeAvisoInactividad = "Se han dado de baja a los usuarios inactivos.";
     }
 

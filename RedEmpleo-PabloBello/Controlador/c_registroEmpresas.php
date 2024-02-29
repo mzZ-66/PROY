@@ -11,7 +11,7 @@
 
     $db = new operacionesEmpresa();
     try {
-        $nuevaEmpresa = new Empresa($cif, $clave, $nombre, $email, $ultimaPeticion, 0);
+        $nuevaEmpresa = new Empresa($cif, $clave, $nombre, $email, $ultimaPeticion, 0, 1);
 
         $db->registrarEmpresa($nuevaEmpresa);
         $mensajeEmail = "

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 29, 2024 at 02:18 PM
+-- Generation Time: Feb 29, 2024 at 05:25 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -69,7 +69,8 @@ CREATE TABLE `alumno` (
 INSERT INTO `alumno` (`dni`, `clave`, `nombre`, `apellidos`, `email`, `disponibilidad`, `ultimoAcceso`, `estudiosExternos`, `activo`) VALUES
 ('05319965L', '$2y$10$wBSNpZUcKavYeepET2tZ5O.FvrK4i6V4WYGogfFwUwlcSkvKrrYsK', 'Ted', 'Kaczynsksi', 'tedkaczynski@example.com', 0, '2024-02-29', '3 meses en Softtek', 1),
 ('11949813W', '$2y$10$egREaRBpUHSN68PbhZVyIu7FKY6COwfCIAQtwdbZZJ4j4p5yYe1oq', 'John', 'Doe', 'john.doe@example.com', 1, '2024-02-29', 'Nada', 1),
-('52439891Y', '$2y$10$Vm9Yav3dunofsX7vr5iDMe7gw9PZgm9JLeQx56K2um3UbvfhlH1kK', 'Charlie', 'Brown', 'charlie.brown@example.com', 1, '2023-02-28', '', 1);
+('52439891Y', '$2y$10$Vm9Yav3dunofsX7vr5iDMe7gw9PZgm9JLeQx56K2um3UbvfhlH1kK', 'Charlie', 'Brown', 'charlie.brown@example.com', 1, '2024-02-29', '', 1),
+('56990880P', '$2y$10$KS/1CIz5w/.MH77EMzup0eLjuxstiNhR3Ef81DflhMuD/Z8D9ChAi', 'Tom', 'Hatton', 'tomhatton@example.com', 1, '2024-02-29', '', 1);
 
 -- --------------------------------------------------------
 
@@ -92,7 +93,9 @@ INSERT INTO `alumno_estudios` (`id`, `alumno`, `estudios`) VALUES
 (9, '05319965L', 21),
 (10, '05319965L', 22),
 (11, '11949813W', 22),
-(12, '52439891Y', 21);
+(12, '52439891Y', 21),
+(15, '56990880P', 20),
+(16, '56990880P', 22);
 
 -- --------------------------------------------------------
 
@@ -111,7 +114,7 @@ CREATE TABLE `aviso` (
 --
 
 INSERT INTO `aviso` (`id`, `email`, `fecha`) VALUES
-(5, 'charlie.brown@example.com', '2024-02-29');
+(20, 'test2@example.com', '2024-02-29');
 
 -- --------------------------------------------------------
 
@@ -146,15 +149,17 @@ CREATE TABLE `empresa` (
   `nombre` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `ultimaPeticion` date NOT NULL,
-  `empleadora` tinyint(1) NOT NULL
+  `empleadora` tinyint(1) NOT NULL,
+  `activo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `empresa`
 --
 
-INSERT INTO `empresa` (`cif`, `clave`, `nombre`, `email`, `ultimaPeticion`, `empleadora`) VALUES
-(12345, '$2y$10$gotJtJZiBwAf4NNS185TweJJTAEm4QEGxq5IvinIvTLhEq4wQEwAm', 'Empresa S.L.', 'empresasl@example.com', '2024-02-29', 1);
+INSERT INTO `empresa` (`cif`, `clave`, `nombre`, `email`, `ultimaPeticion`, `empleadora`, `activo`) VALUES
+(12345, '$2y$10$gotJtJZiBwAf4NNS185TweJJTAEm4QEGxq5IvinIvTLhEq4wQEwAm', 'Empresa S.L.', 'empresasl@example.com', '2024-02-29', 1, 1),
+(54321, '$2y$10$Q2vnum/0XN4cmPy/1LPUwOvVRemeyiFlbV8bU9l03TWEHSLnCilBG', 'Test2', 'test2@example.com', '2023-02-28', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -385,13 +390,13 @@ ALTER TABLE `tutor`
 -- AUTO_INCREMENT for table `alumno_estudios`
 --
 ALTER TABLE `alumno_estudios`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `aviso`
 --
 ALTER TABLE `aviso`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `contrato`

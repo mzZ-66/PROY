@@ -251,5 +251,22 @@
             $consulta->bind_param("s", $email);
             $consulta->execute();
         }
+
+        public function borrarAvisoSiLoEsta($dni) {
+            $consulta = $this->conexion->prepare("DELETE FROM aviso WHERE email = (SELECT email FROM alumno WHERE dni = ?);");
+            $consulta->bind_param("s", $dni);
+            $consulta->execute();
+        }
+
+        public function isActivo($dni) {
+            $consulta = $this->conexion->prepare("SELECT activo FROM alumno WHERE dni = ?;");
+            $consulta->bind_param("s", $dni);
+            $consulta->execute();
+            $resultado = $consulta->get_result();
+            $alumno = $resultado->fetch_assoc();
+            if ($alumno['activo'] == 0) {
+                return false;
+            } else return true;
+        }
     }
 ?>
