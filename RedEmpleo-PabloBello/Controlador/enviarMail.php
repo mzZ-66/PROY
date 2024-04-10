@@ -9,18 +9,18 @@
     function enviarMail($asunto, $mensaje, $emailUsuario) {
         $mail = new PHPMailer(true);
         try {
-            // ajustes de phpmailer. Aqui escribo los datos de SMTP2GO
+            // ajustes de phpmailer. Aqui escribo los datos del servidor smtp
             $mail->SMTPDebug = 0; // Set to 2 for debugging information
             $mail->isSMTP();
-            $mail->Host = 'mail.smtp2go.com'; // SMTP2GO SMTP server
+            $mail->Host = 'example.com'; // SMTP server
             $mail->SMTPAuth = true;
-            $mail->Username = 'pbellov01@educastillalamancha.es'; // SMTP2GO username
-            $mail->Password = 'qk44ZB4bfVzT3bVc'; // SMTP2GO password
+            $mail->Username = 'example@example.com'; // SMTP username
+            $mail->Password = 'insertPasswordHere'; // SMTP password
             $mail->SMTPSecure = 'tls'; // Enable TLS encryption, 'ssl' also accepted
             $mail->Port = 587; // TCP port to connect to
     
             // email con el que se envia y el que lo recibe
-            $mail->setFrom('pbellov01@educastillalamancha.es');
+            $mail->setFrom('example@example.com');
             $mail->addAddress($emailUsuario);
     
             // adjunto el pdf generado
